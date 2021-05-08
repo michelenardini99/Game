@@ -62,6 +62,9 @@ public class Game implements Runnable{
         g=bs.getDrawGraphics();
         //clear screen
         g.clearRect(0, 0, width, height);
+        g.drawImage(Assets.background, 0, 0, Assets.background.getWidth()*2, Assets.background.getHeight()*2, null);
+        g.drawImage(Assets.wall, 427, 0, 100, 1080, null);
+        g.drawImage(Assets.wall, 965, 0, 100, 1080, null);
         //draw here
         if(State.getCurrentState() != null)
             State.getCurrentState().render(g);
@@ -93,7 +96,6 @@ public class Game implements Runnable{
             }
             
             if(timer >= 1000000000) {
-                System.out.println("Ticks and Frame: "+ticks);
                 ticks=0;
                 timer=0;
             }

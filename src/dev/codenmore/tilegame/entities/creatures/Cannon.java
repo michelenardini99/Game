@@ -3,7 +3,7 @@ package dev.codenmore.tilegame.entities.creatures;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
-import java.util.Iterator;
+import java.util.Random;
 
 import dev.codenmore.tilegame.Game;
 import dev.codenmore.tilegame.gfx.Assets;
@@ -14,6 +14,7 @@ public class Cannon extends Creature{
     private Balls balls;
     private Ball ball;
     private boolean ballPos;
+    private Random rand = new Random();
     
     private int angle=0;
     private int i=0;
@@ -22,9 +23,10 @@ public class Cannon extends Creature{
         super(x, y, width, height);
         this.game=game;
         this.balls=b;
-        ball=new Ball(game,512,300,400,400);
-        balls.addBall(ball);
+        this.setSpeed(5);
         this.ballPos=true;
+        ball=new Ball(game,720,715,47,47,getColor());
+        balls.addBall(ball);
     }
     
     public void tick() {
@@ -35,18 +37,20 @@ public class Cannon extends Creature{
     
     public void newBall() {
        if(!ball.isMove && !ballPos) {
-           ball=new Ball(game,512,300,400,400);
+           ball=new Ball(game,720,715,47,47,getColor());
            balls.addBall(ball);
            i++;
-           System.out.println("New Bolla, "+i);
            ballPos=true;
        }
     }
     
+   private int getColor() {
+       return rand.nextInt(4);
+   }
+    
     private void shot() {
-        if(ballPos) {
+        if(ballPos && game.getkeyManager().enter) {
             ball.directMove=(float) Math.toDegrees(Math.toRadians(angle-90));
-            System.out.println(Math.toDegrees(Math.toRadians(angle)));
             ball.direct();
             ball.isMove=true;
             ballPos=false;
@@ -61,11 +65,12 @@ public class Cannon extends Creature{
     }
 
     public void render(Graphics g) {
-        AffineTransform at = AffineTransform.getTranslateInstance((int)x,(int)y);
-        at.rotate(Math.toRadians(angle),Assets.cannon.getWidth()/2,Assets.cannon.getHeight()/2);
+        AffineTransform at = AffineTransform.getTranslateInstance(709,673);
+        at.rotate(Math.toRadians(angle),Assets.arrow.getWidth()/2,Assets.arrow.getHeight()/2);
         at.scale(1,1);
         Graphics2D g2 = (Graphics2D)g;
-        g2.drawImage(Assets.cannon, at, null);
+        g.drawImage(Assets.cannon,600,700, Assets.cannon.getWidth(), Assets.cannon.getHeight(), null);
+        g2.drawImage(Assets.arrow, at, null);
     }
 
 }

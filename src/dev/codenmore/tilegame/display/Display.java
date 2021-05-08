@@ -3,7 +3,10 @@ package dev.codenmore.tilegame.display;
 import java.awt.Canvas;
 import java.awt.Dimension;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 public class Display {
     
@@ -25,7 +28,7 @@ public class Display {
     private void createDisplay() {
          frame=new JFrame(this.title);
          frame.setSize(this.width,this.height);
-         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+         
          frame.setResizable(false);
          frame.setLocationRelativeTo(null);
          frame.setVisible(true);
